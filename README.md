@@ -12,3 +12,5 @@ Implementation of Gomuko (5 in a row) board game using minmax and alpha beta pru
 **blanks(board):** find the empty cells and returns an array of indexes  
 **boardFull(board):** check whether the board is full or not  
 
+# Currently Working On  
+Score evaluation function to generate the scores of any state  
