@@ -1,4 +1,5 @@
 const SIZE = 10;
+const MAX_DEPTH = SIZE * SIZE - 3;
 function initializeBoard() {
     var board = [];
     for (let i = 0; i < SIZE; i++) {
@@ -119,6 +120,11 @@ function score(board, countFor, current_turn) {
     }
     return countFor * score;
 }
+
+function totalScore(board, current_turn) {
+    return score(board, 1, current_turn) + score(board, -1, current_turn)
+}
+
 
 // function verticalScore(board, countFor, current_turn) {
 //     var score = 0;
@@ -498,6 +504,7 @@ function AIMove(board, currentPlayer) {
     }
     else {
         result = abminimax(board, blanks(board).length, -Infinity, Infinity, currentPlayer)
+        console.log(result);
         setmove(board, result[0], result[1], currentPlayer)
         printBoard(board)
     }
@@ -505,10 +512,54 @@ function AIMove(board, currentPlayer) {
 
 
 function abminimax(board, depth, alpha, beta, player) {
+    var row = -1
+    var col = -1
+
+    var linearBoard = (createLinearArray(board));
+    if (depth >= MAX_DEPTH || gameWon(linearBoard)) {
+        return [row, col, totalScore(linearBoard, player)]
+    }
+    else {
+
+        var cells = blanks(board)
+        for (let i = 0; i < cells.length; i++) {
+
+            setmove(board, cells[i][0], cells[i][1], player)
+            var Score = abminimax(board, depth - 1, alpha, beta, -player)
+            if (player == 1) {
+                if (score[2] > alpha) {
+                    alpha = score[2]
+                    row = cells[i][0]
+                    col = cells[i][1]
+                }
+
+            }
+            else {
+                if (score[2] < beta) {
+                    beta = score[2]
+                    row = cells[i][0]
+                    col = cells[i][1]
+                }
+            }
+            setmove(board, cells[i][0], cells[i][1], 0)
+            if (alpha >= beta) break
+
+
+
+
+        }
+        if (player == 1)
+            return [row, col, alpha]
+
+        else
+            return [row, col, beta]
+
+    }
 
 }
 
 function makeMove(board, currentPlayer) {
+
 
     if (currentPlayer == 1)
         playerMove(board, currentPlayer)
@@ -540,6 +591,7 @@ function playGomuko() {
     var linearBoard = (createLinearArray(board));
     while (!(boardFull(board) || gameWon(linearBoard))) {
         console.log('code is here');
+
         makeMove(board, currentPlayer)
         currentPlayer *= -1
     }
