@@ -24,7 +24,7 @@ Implementation of Gomuko (5 in a row) board game using minmax and alpha beta pru
   When game finished print result  
 
 **Makemove(board,player):**  
-  make a move based on the current player
+Make a move based on the current player
   1. PlayerMove
   2. AI Move
 
@@ -34,4 +34,4 @@ Implementation of Gomuko (5 in a row) board game using minmax and alpha beta pru
 
 
 # Currently Working On  
-Score evaluation function to generate the scores of any state  
+Minimax algorithm to generate the AI move
