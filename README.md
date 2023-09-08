@@ -16,11 +16,11 @@ Implementation of Gomuko (5 in a row) board game using minmax and alpha beta pru
 **gamewon(board):**  check if the game has been won by any player or not  
 **Result print(board):** print the max win/ min win / draw results  
 **Game()**  
-  Take player choice-1st or 2nd
-  Clear the board
-  Set current player value
-  Play until game is won or board is full
-  Make a move and change the current player
+  Take player choice-1st or 2nd  
+  Clear the board  
+  Set current player value  
+  Play until game is won or board is full  
+  Make a move and change the current player  
   When game finished print result  
 
 **Makemove(board,player):**  
