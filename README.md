@@ -38,12 +38,12 @@ Make a move based on the current player
 2.before exploring the state first check if the depth=0 (board full) or game has been won or depth> maxdepth. If yes then return initial move(-1,-1) and score  
   
 3.If the state is explorable then for each blank cell  
-  set a move (for example 1,1) of the current player  
-  Now get the score (move (row+col)(for example 2,2), score value)  that will earn by the opponent if the current player sets the move (1,1). To get the score we will call the minimax algorithm by providing the changed board state,current depth -1 , parents alpha , beta and changing the opponent (change current player value)  
-  Based on the current player, check if alpha or beta can be altered. If we can alter alpha/beta then we must track the move(row+col) for which the alpha/beta is altering  
-  undo that move  
-  Before exploring another blank we have to check if we can prune the rest of the branch so after undoing the move we will check if alpha >= beta. If yes then we should break the loop  
-  On completion of the loop we will return the move and the alpha/beta value. If current player is 1 then  alpha will be returned else beta will be returned  
+- set a move (for example 1,1) of the current player  
+- Now get the score (move (row+col)(for example 2,2), score value)  that will earn by the opponent if the current player sets the move (1,1). To get the score we will call the minimax algorithm by providing the changed board state,current depth -1 , parents alpha , beta and changing the opponent (change current player value)  
+- Based on the current player, check if alpha or beta can be altered. If we can alter alpha/beta then we must track the move(row+col) for which the alpha/beta is altering  
+- undo that move  
+- Before exploring another blank we have to check if we can prune the rest of the branch so after undoing the move we will check if alpha >= beta. If yes then we should break the loop  
+- On completion of the loop we will return the move and the alpha/beta value. If current player is 1 then  alpha will be returned else beta will be returned  
 
 
 
