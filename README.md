@@ -48,4 +48,4 @@ Make a move based on the current player
 
 
 # Currently Working On  
-Minimax algorithm to generate the AI move
+Optimizing AI moves
