@@ -1,0 +1,53 @@
+/* Reset default margin and padding for all elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set the height of the body and HTML elements to 100% */
+html, body {
+  height: 100%;
+}
+
+/* Set the matrix-container to fill the entire viewport with a sky-blue background color */
+.matrix-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #87ceeb; /* Sky-blue background color */
+  width: 100%;
+  height: 100vh; /* Use viewport height to fill the entire screen */
+  padding: 20px; /* Add some spacing around the container */
+}
+
+.matrix-row {
+  display: flex;
+  margin: 5px; /* Add spacing between rows */
+}
+
+.matrix-cell {
+  width: 50px; /* Adjust the width to make the cells larger */
+  height: 50px; /* Adjust the height to make the cells larger */
+  border: 1px solid #000; /* Black border around each cell */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #ffffff; /* White cell background */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  font-size: 1.2rem; /* Increase font size */
+  font-weight: bold; /* Add some emphasis to text */
+  color: #333; /* Dark gray text color */
+}
+
+/* Add hover effect to cells */
+.matrix-cell:hover {
+  background-color: #ffcc00; /* Yellow background on hover */
+  color: #000; /* Black text on hover */
+}
+
+.marked {
+  background-color: #66ff66; /* Light green background for marked cells */
+  color: #333; /* Dark gray text color for marked cells */
+}
