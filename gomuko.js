@@ -479,43 +479,41 @@ function printResult(board) {
         console.log('Draw' + '\n')
 }
 
-function playerMove(board, currentPlayer, count) {
-    // while (true) {
-    //     try {
+function playerMove(board, currentPlayer) {
+    while (true) {
+        try {
 
-    //         const row = prompt('Enter row number between 1-10: ');
-    //         if (row < 1 && row > 10) console.log('PLEASE PICK ROW NUMBER WITHIN 1 TO 10');
-    //         else {
-    //             const column = prompt('Enter column number between 1-10: ');
-    //             if (column < 1 && column > 10) console.log('PLEASE PICK COLUMN NUMBER WITHIN 1 TO 10');
-    //             else {
-    //                 setmove(board, row, column, currentPlayer)
-    //                 printBoard(board)
-    //                 return
-    //             }
-    //         }
+            const row = prompt('Enter row number between 1-10: ');
+            if (row < 1 && row > 10) console.log('PLEASE PICK ROW NUMBER WITHIN 1 TO 10');
+            else {
+                const column = prompt('Enter column number between 1-10: ');
+                if (column < 1 && column > 10) console.log('PLEASE PICK COLUMN NUMBER WITHIN 1 TO 10');
+                else {
+                    setmove(board, row, column, currentPlayer)
+                    printBoard(board)
+                    return
+                }
+            }
 
-    //     } catch (error) {
-    //         console.log('Please enter your move positions');
-    //     }
+        } catch (error) {
+            console.log('Please enter your move positions');
+        }
+    }
+    // var row;
+    // var column;
+    // if (count == 1) {
+    //     row = 2
+    //     column = 2
     // }
-    var row;
-    var column;
-    if (count == 1) {
-        row = 2
-        column = 2
-    }
-    else if (count == 3) {
-        row = 2
-        column = 3
-    }
-    else if (count == 5) {
-        row = 2
-        column = 1
-    }
-
-
-    setmove(board, row, column, currentPlayer)
+    // else if (count == 3) {
+    //     row = 2
+    //     column = 3
+    // }
+    // else if (count == 5) {
+    //     row = 2
+    //     column = 1
+    // }
+    // setmove(board, row, column, currentPlayer)
 }
 
 function AIMove(board, currentPlayer) {
@@ -524,7 +522,7 @@ function AIMove(board, currentPlayer) {
         console.log('will do it later');
     }
     else {
-        result = abminimax(board, blanks(board).length, -Infinity, Infinity, currentPlayer)
+        result = abminimax(board, blanks(board).length, blanks(board).length - 2, -Infinity, Infinity, currentPlayer)
         console.log(result);
         setmove(board, result[0], result[1], currentPlayer)
         printBoard(board)
@@ -532,12 +530,12 @@ function AIMove(board, currentPlayer) {
 }
 
 
-function abminimax(board, depth, alpha, beta, player) {
+function abminimax(board, depth, maxDepth, alpha, beta, player) {
     var row = -1
     var col = -1
 
     var linearBoard = (createLinearArray(board));
-    if (depth < MAX_DEPTH || gameWon(linearBoard)) {
+    if (depth < maxDepth || gameWon(linearBoard)) {
         return [row, col, totalScore(linearBoard, player)]
     }
     else {
@@ -546,7 +544,7 @@ function abminimax(board, depth, alpha, beta, player) {
         for (let i = 0; i < cells.length; i++) {
 
             setmove(board, cells[i][0], cells[i][1], player)
-            var Score = abminimax(board, depth - 1, alpha, beta, -player)
+            var Score = abminimax(board, depth - 1, maxDepth, alpha, beta, -player)
             if (player == 1) {
                 if (Score[2] > alpha) {
                     alpha = Score[2]
@@ -579,24 +577,22 @@ function abminimax(board, depth, alpha, beta, player) {
 
 }
 
-function makeMove(board, currentPlayer, count) {
+function makeMove(board, currentPlayer) {
 
 
     if (currentPlayer == 1)
-        playerMove(board, currentPlayer, count)
+        playerMove(board, currentPlayer)
     else
         AIMove(board, currentPlayer)
 }
 
 function playGomuko() {
 
-    let order
+    let order;
     while (true) {
         try {
 
-            // order = prompt('Enter to play 1st or 2nd: ');
-            order = ORDER
-            console.log(order);
+            order = prompt('Enter to play 1st or 2nd: ');
             if (order != 1 && order != 2) console.log('PLEASE PICK 1 OR 2');
             else break;
 
@@ -611,13 +607,14 @@ function playGomuko() {
 
 
     var linearBoard = (createLinearArray(board));
-    var count = 1
+    // var count = 1
     while (!(boardFull(board) || gameWon(linearBoard))) {
         console.log('code is here');
 
-        makeMove(board, currentPlayer, count)
+        // makeMove(board, currentPlayer, count)
+        makeMove(board, currentPlayer)
         currentPlayer *= -1
-        count++
+        // count++
     }
     printResult(linearBoard)
 
