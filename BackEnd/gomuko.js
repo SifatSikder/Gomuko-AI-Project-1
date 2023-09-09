@@ -426,12 +426,12 @@ function AIMove(board, currentPlayer) {
 
     }
 
-    const { present, index } = fourInARow(board, -currentPlayer)
-    if (present) {
-        setmove(board, index[0], index[1], currentPlayer)
-        console.log([index[0], index[1]]);
-        return [index[0], index[1]]
-    }
+    // const { present, index } = fourInARow(board, -currentPlayer)
+    // if (present) {
+    //     setmove(board, index[0], index[1], currentPlayer)
+    //     console.log([index[0], index[1]]);
+    //     return [index[0], index[1]]
+    // }
     else {
         result = abminimax(board, blanks(board).length, blanks(board).length - MAX_DEPTH + 1, -Infinity, Infinity, currentPlayer)
         setmove(board, result[0], result[1], currentPlayer)
