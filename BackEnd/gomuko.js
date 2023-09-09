@@ -1,5 +1,5 @@
 const SIZE = 10;
-const MAX_DEPTH = 4
+const MAX_DEPTH = 3
 function initializeBoard() {
     var board = [];
     for (let i = 0; i < SIZE; i++) {
@@ -94,6 +94,96 @@ function createLinearArray(board) {
 
     return linearArray;
 }
+
+function createIndexArray(board) {
+
+    var indexes = []
+    for (let i = 0; i < board.length; i++) {
+        var rowIndexes = []
+        for (let j = 0; j < board[0].length; j++) {
+            rowIndexes.push([i, j]);
+        }
+        indexes.push(rowIndexes)
+    }
+
+    for (let j = 0; j < board[0].length; j++) {
+        var colIndexes = []
+        for (let i = 0; i < board.length; i++) {
+            colIndexes.push([i, j])
+        }
+        indexes.push(colIndexes);
+    }
+
+    function findDiagonals(board) {
+        const numRows = board.length;
+        const numCols = board[0].length;
+
+        // Initialize arrays to store main and secondary diagonals
+        const diagonals = [];
+
+
+        // Find main diagonals
+        for (let i = 0; i < numRows; i++) {
+            const diagonal = [];
+            for (let j = 0; j < numCols; j++) {
+                if (i + j < numCols) {
+                    diagonal.push([i + j, j]);
+                }
+            }
+            if (diagonal.length > 4) {
+                diagonals.push(diagonal);
+            }
+        }
+
+        for (let j = 1; j < numCols; j++) {
+            const diagonal = [];
+            for (let i = 0; i < numRows; i++) {
+                if (i + j < numRows) {
+                    diagonal.push([i, i + j]);
+                }
+            }
+            if (diagonal.length > 4) {
+                diagonals.push(diagonal);
+            }
+        }
+
+        // Find secondary diagonals
+        for (let i = 0; i < numRows; i++) {
+            const diagonal = [];
+            for (let j = 0; j < numCols; j++) {
+                if (i + j < numRows) {
+                    diagonal.push([i + j, numCols - 1 - j]);
+                }
+            }
+            if (diagonal.length > 4) {
+                diagonals.push(diagonal);
+            }
+        }
+
+        for (let j = numCols - 2; j >= 0; j--) {
+            const diagonal = [];
+            for (let i = 0; i < numRows; i++) {
+                if (i + j < numCols - 1) {
+                    diagonal.push([i, numCols - 2 - j - i]);
+                }
+            }
+            if (diagonal.length > 4) {
+                diagonals.push(diagonal);
+            }
+        }
+
+        return diagonals;
+    }
+
+
+    const diagonalIndexes = findDiagonals(board);
+    diagonalIndexes.forEach(diagonalIndex => {
+        indexes.push(diagonalIndex);
+    });
+
+    return indexes;
+}
+
 
 function blanks(board) {
     var blanks = [];
@@ -280,21 +370,29 @@ function abminimax(board, depth, maxDepth, alpha, beta, player) {
 
 }
 
-function fourInARow(linearBoard, opponentPlayer) {
+function fourInARow(board, opponentPlayer) {
+    var linearBoard = createLinearArray(board)
+    var indexes = createIndexArray(board)
+
     var present = false;
+    var index;
     for (let i = 0; i < linearBoard.length; i++) {
         for (let j = 0; j < linearBoard[i].length - 4; j++) {
             var count = 0
             for (let k = 0; k < 5; k++) {
                 if (linearBoard[i][j + k] === opponentPlayer) count++;
-                if (count == 4) {
+                if (count == 4 && ((linearBoard[i][j + k - 4] === 0) || (linearBoard[i][j + k + 1] === 0))) {
+                    if (linearBoard[i][j + k - 4] === 0)
+                        index = indexes[i][j + k - 4]
+                    else if (linearBoard[i][j + k + 1] === 0)
+                        index = indexes[i][j + k + 1]
                     present = true;
-                    return present
+                    return { present: present, index: index }
                 }
             }
         }
     }
-    return present;
+    return { present: present, index: index }
 
 }
 
@@ -303,7 +401,7 @@ function AIMove(board, currentPlayer) {
 
 
     if (blanks(board).length == SIZE * SIZE) {
-        return [4, 4]
+        return [(SIZE / 2) - 1, (SIZE / 2) - 1]
     }
     else if (blanks(board).length == SIZE * SIZE - 1) {
         var position = findFirstPositionOfBlack(board)
@@ -328,8 +426,12 @@ function AIMove(board, currentPlayer) {
 
     }
 
-
-
+    const { present, index } = fourInARow(board, -currentPlayer)
+    if (present) {
+        setmove(board, index[0], index[1], currentPlayer)
+        console.log([index[0], index[1]]);
+        return [index[0], index[1]]
+    }
     else {
         result = abminimax(board, blanks(board).length, blanks(board).length - MAX_DEPTH + 1, -Infinity, Infinity, currentPlayer)
         setmove(board, result[0], result[1], currentPlayer)
