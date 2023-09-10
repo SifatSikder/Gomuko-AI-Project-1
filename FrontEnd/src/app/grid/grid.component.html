@@ -1,7 +1,6 @@
-
 <h3 class="Gomuko">Gomuko</h3>
 <div class="matrix-container">
-  
+
   <table>
     <tr *ngFor="let row of grid; let i = index" class="matrix-row">
       <td *ngFor="let cell of row; let j = index" class="matrix-cell" [class.marked]="cell==='x'"
