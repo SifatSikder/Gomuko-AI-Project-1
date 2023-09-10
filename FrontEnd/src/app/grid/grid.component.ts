@@ -35,6 +35,8 @@ export class GridComponent implements OnInit {
     // Send row and column data to the backend
     this.http.post<any>(`${this.BASE_URL}/mark-cell`, { row, col }).subscribe(response => {
 
+      console.log(response);
+
       if (response.AImove) {
         this.grid[response.move[0]][response.move[1]] = 'W';
       }

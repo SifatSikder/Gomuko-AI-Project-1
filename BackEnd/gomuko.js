@@ -443,8 +443,6 @@ function abminimax(board, depth, maxDepth, alpha, beta, player) {
 
 function AIMove(board, currentPlayer) {
 
-    console.log(board);
-    console.log(currentPlayer);
 
 
     if (blanks(board).length == SIZE * SIZE) {
@@ -476,18 +474,18 @@ function AIMove(board, currentPlayer) {
 
     }
 
-    // const { present, index } = fourInARow(board, -currentPlayer)
+    // const { present, index } = fourInARow(board, currentPlayer)
     // if (present) {
     //     setmove(board, index[0], index[1], currentPlayer)
     //     console.log([index[0], index[1]]);
     //     return [index[0], index[1]]
     // }
+
     else {
-        console.log(board);
-        console.log(blanks(board).length + ' Result is: ');
         result = abminimax(board, blanks(board).length, blanks(board).length - MAX_DEPTH + 1, -Infinity, Infinity, currentPlayer)
         console.log([result[0], result[1]]);
         setmove(board, result[0], result[1], currentPlayer)
+        console.log(board);
         return [result[0], result[1]]
     }
 }
