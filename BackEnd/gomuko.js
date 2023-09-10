@@ -3,31 +3,31 @@ const MAX_DEPTH = 3
 var currentPlayer;
 var board;
 
-// function fourInARow(board, opponentPlayer) {
-//     var linearBoard = createLinearArray(board)
-//     var indexes = createIndexArray(board)
+function fourInARow(board, opponentPlayer) {
+    var linearBoard = createLinearArray(board)
+    var indexes = createIndexArray(board)
 
-//     var present = false;
-//     var index;
-//     for (let i = 0; i < linearBoard.length; i++) {
-//         for (let j = 0; j < linearBoard[i].length - 4; j++) {
-//             var count = 0
-//             for (let k = 0; k < 5; k++) {
-//                 if (linearBoard[i][j + k] === opponentPlayer) count++;
-//                 if (count == 4 && ((linearBoard[i][j + k - 4] === 0) || (linearBoard[i][j + k + 1] === 0))) {
-//                     if (linearBoard[i][j + k - 4] === 0)
-//                         index = indexes[i][j + k - 4]
-//                     else if (linearBoard[i][j + k + 1] === 0)
-//                         index = indexes[i][j + k + 1]
-//                     present = true;
-//                     return { present: present, index: index }
-//                 }
-//             }
-//         }
-//     }
-//     return { present: present, index: index }
+    var present = false;
+    var index;
+    for (let i = 0; i < linearBoard.length; i++) {
+        for (let j = 0; j < linearBoard[i].length - 4; j++) {
+            var count = 0
+            for (let k = 0; k < 5; k++) {
+                if (linearBoard[i][j + k] === opponentPlayer) count++;
+                if (count == 4 && ((linearBoard[i][j + k - 4] === 0) || (linearBoard[i][j + k + 1] === 0))) {
+                    if (linearBoard[i][j + k - 4] === 0)
+                        index = indexes[i][j + k - 4]
+                    else if (linearBoard[i][j + k + 1] === 0)
+                        index = indexes[i][j + k + 1]
+                    present = true;
+                    return { present: present, index: index }
+                }
+            }
+        }
+    }
+    return { present: present, index: index }
 
-// }
+}
 
 function all5Combo(board) {
     var linearBoard = createLinearArray(board)
