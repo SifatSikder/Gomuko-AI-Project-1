@@ -103,7 +103,11 @@ export class GridComponent implements OnInit {
       }
     })
 
-    this.http.post<any>(`${this.BASE_URL}/playerOrder`, { choice }).subscribe();
+    this.http.post<any>(`${this.BASE_URL}/playerOrder`, { choice }).subscribe(response => {
+      if (response.AImove) {
+        this.grid[response.move[0]][response.move[1]] = 'W';
+      }
+    });
   }
 
   ngOnInit(): void {

@@ -19,8 +19,7 @@ app.post('/mark-cell', (req, res) => {
 
 app.post('/playerOrder', (req, res) => {
   const { choice } = req.body;
-  gomuko.initiate(choice)
-  res.status(200).json({ message: 'Board Initiated' });
+  res.status(200).json(gomuko.initiate(choice));
 })
 
 app.get('/flush', (req, res) => {

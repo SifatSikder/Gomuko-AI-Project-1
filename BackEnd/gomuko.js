@@ -303,8 +303,16 @@ function setmove(board, row, col, player) {
 function initiate(order) {
 
     board = initializeBoard()
-    if (order == 2) currentPlayer = -1
-    else currentPlayer = 1
+    if (order == 2) {
+        currentPlayer = -1
+        var move = AIMove(board, currentPlayer)
+        currentPlayer *= -1
+        return { AImove: true, move: move, gameFinished: gameFinished(board), result: printResult(createLinearArray(board)) }
+    }
+    else {
+        currentPlayer = 1
+        return { AImove: false, move: '', gameFinished: gameFinished(board), result: printResult(createLinearArray(board)) }
+    }
 }
 
 function gameFinished(board) {
@@ -447,10 +455,12 @@ function AIMove(board, currentPlayer) {
 
     if (blanks(board).length == SIZE * SIZE) {
 
+        console.log('AI starts game');
         setmove(board, (SIZE / 2) - 1, (SIZE / 2) - 1, currentPlayer)
         return [(SIZE / 2) - 1, (SIZE / 2) - 1]
     }
     else if (blanks(board).length == SIZE * SIZE - 1) {
+        console.log('first AI move');
         var position = findFirstPositionOfBlack(board)
         var neighbours = []
         neighbours.push([position[0], position[1] + 1])
@@ -474,12 +484,26 @@ function AIMove(board, currentPlayer) {
 
     }
 
-    // const { present, index } = fourInARow(board, currentPlayer)
-    // if (present) {
-    //     setmove(board, index[0], index[1], currentPlayer)
-    //     console.log([index[0], index[1]]);
-    //     return [index[0], index[1]]
-    // }
+    var { present, index } = fourInARow(board, currentPlayer)
+    if (present) {
+        console.log('AI 4 in a Row');
+        // console.log(fourInARow(board, currentPlayer));
+        // console.log([index[0], index[1]]);
+        setmove(board, index[0], index[1], currentPlayer)
+        // console.log(board);
+        return index
+    }
+
+
+    var { present, index } = fourInARow(board, -1 * currentPlayer)
+    if (present) {
+        // console.log(fourInARow(board, -1 * currentPlayer));
+        console.log('Human 4 in a row');
+        // console.log([index[0], index[1]]);
+        setmove(board, index[0], index[1], currentPlayer)
+        // console.log(board);
+        return index
+    }
 
     else {
         result = abminimax(board, blanks(board).length, blanks(board).length - MAX_DEPTH + 1, -Infinity, Infinity, currentPlayer)
