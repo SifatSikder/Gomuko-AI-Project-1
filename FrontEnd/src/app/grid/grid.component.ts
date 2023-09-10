@@ -19,6 +19,14 @@ export class GridComponent implements OnInit {
     }
   }
 
+  flushBoard() {
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        this.grid[i][j] = 0;
+      }
+    }
+  }
+
   markCell(row: number, col: number) {
 
     if (this.grid[row][col] === 'B' || this.grid[row][col] === 'W') return
@@ -42,8 +50,7 @@ export class GridComponent implements OnInit {
 
         this.http.get<any>(`${this.BASE_URL}/flush`).subscribe(response => {
           console.log(response.board);
-
-
+          this.flushBoard();
         });
 
       }
@@ -57,9 +64,7 @@ export class GridComponent implements OnInit {
 
   ngOnInit(): void {
     this.showPrompt()
-
   }
-
 
   // ngAfterViewInit(): void {
 

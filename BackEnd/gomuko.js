@@ -73,6 +73,11 @@ function initializeBoard() {
     return board
 }
 
+function flushBoard() {
+    board = initializeBoard()
+    return board;
+}
+
 function createLinearArray(board) {
 
     var linearArray = []
@@ -502,4 +507,4 @@ function playerMove(row, col) {
     }
 }
 
-module.exports = { initiate, playerMove, initializeBoard };
+module.exports = { initiate, playerMove, flushBoard };
