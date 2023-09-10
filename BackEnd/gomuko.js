@@ -1,5 +1,66 @@
 const SIZE = 10;
 const MAX_DEPTH = 3
+var currentPlayer;
+var board;
+
+function fourInARow(board, opponentPlayer) {
+    var linearBoard = createLinearArray(board)
+    var indexes = createIndexArray(board)
+
+    var present = false;
+    var index;
+    for (let i = 0; i < linearBoard.length; i++) {
+        for (let j = 0; j < linearBoard[i].length - 4; j++) {
+            var count = 0
+            for (let k = 0; k < 5; k++) {
+                if (linearBoard[i][j + k] === opponentPlayer) count++;
+                if (count == 4 && ((linearBoard[i][j + k - 4] === 0) || (linearBoard[i][j + k + 1] === 0))) {
+                    if (linearBoard[i][j + k - 4] === 0)
+                        index = indexes[i][j + k - 4]
+                    else if (linearBoard[i][j + k + 1] === 0)
+                        index = indexes[i][j + k + 1]
+                    present = true;
+                    return { present: present, index: index }
+                }
+            }
+        }
+    }
+    return { present: present, index: index }
+
+}
+
+function all5Combo(board) {
+    var linearBoard = createLinearArray(board)
+    var fives = []
+    for (let i = 0; i < linearBoard.length; i++) {
+        for (let j = 0; j < linearBoard[i].length - 4; j++) {
+            var aFive = []
+            for (let k = 0; k < 5; k++) {
+                aFive.push(linearBoard[i][j + k])
+            }
+            fives.push(aFive)
+        }
+    }
+    return fives
+
+}
+
+function all6Combo(board) {
+    var linearBoard = createLinearArray(board)
+    var sixes = []
+    for (let i = 0; i < linearBoard.length; i++) {
+        for (let j = 0; j < linearBoard[i].length - 5; j++) {
+            var aSix = []
+            for (let k = 0; k < 6; k++) {
+                aSix.push(linearBoard[i][j + k])
+            }
+            sixes.push(aSix)
+        }
+    }
+    return sixes
+
+}
+
 function initializeBoard() {
     var board = [];
     for (let i = 0; i < SIZE; i++) {
@@ -184,7 +245,6 @@ function createIndexArray(board) {
     return indexes;
 }
 
-
 function blanks(board) {
     var blanks = [];
     for (let i = 0; i < SIZE; i++) {
@@ -196,6 +256,7 @@ function blanks(board) {
     }
     return blanks;
 }
+
 function findFirstPositionOfBlack(board) {
     for (let i = 0; i < SIZE; i++) {
         for (let j = 0; j < SIZE; j++) {
@@ -230,7 +291,8 @@ function gameWon(linearBoard) {
 }
 
 function setmove(board, row, col, player) {
-    board[row][col] = player;
+    if (row > 0 && row < SIZE && col > 0 && col < SIZE)
+        board[row][col] = player;
 }
 
 function initiate(order) {
@@ -238,7 +300,10 @@ function initiate(order) {
     board = initializeBoard()
     if (order == 2) currentPlayer = -1
     else currentPlayer = 1
+}
 
+function gameFinished(board) {
+    return boardFull(board) || gameWon(createLinearArray(board))
 }
 
 function printResult(linearBoard) {
@@ -331,6 +396,7 @@ function score(board, countFor, current_turn) {
 function totalScore(board, current_turn) {
     return score(board, 1, current_turn) + score(board, -1, current_turn)
 }
+
 function abminimax(board, depth, maxDepth, alpha, beta, player) {
     var row = -1
     var col = -1
@@ -370,37 +436,12 @@ function abminimax(board, depth, maxDepth, alpha, beta, player) {
 
 }
 
-function fourInARow(board, opponentPlayer) {
-    var linearBoard = createLinearArray(board)
-    var indexes = createIndexArray(board)
-
-    var present = false;
-    var index;
-    for (let i = 0; i < linearBoard.length; i++) {
-        for (let j = 0; j < linearBoard[i].length - 4; j++) {
-            var count = 0
-            for (let k = 0; k < 5; k++) {
-                if (linearBoard[i][j + k] === opponentPlayer) count++;
-                if (count == 4 && ((linearBoard[i][j + k - 4] === 0) || (linearBoard[i][j + k + 1] === 0))) {
-                    if (linearBoard[i][j + k - 4] === 0)
-                        index = indexes[i][j + k - 4]
-                    else if (linearBoard[i][j + k + 1] === 0)
-                        index = indexes[i][j + k + 1]
-                    present = true;
-                    return { present: present, index: index }
-                }
-            }
-        }
-    }
-    return { present: present, index: index }
-
-}
-
-
 function AIMove(board, currentPlayer) {
 
 
     if (blanks(board).length == SIZE * SIZE) {
+
+        setmove(board, (SIZE / 2) - 1, (SIZE / 2) - 1, currentPlayer)
         return [(SIZE / 2) - 1, (SIZE / 2) - 1]
     }
     else if (blanks(board).length == SIZE * SIZE - 1) {
@@ -416,8 +457,9 @@ function AIMove(board, currentPlayer) {
         neighbours.push([position[0] + 1, position[1] + 1])
         neighbours = neighbours.filter(checkValidPosition);
 
-
-        return neighbours[Math.floor(Math.random() * neighbours.length)];
+        var move = neighbours[Math.floor(Math.random() * neighbours.length)];
+        setmove(board, move[0], move[1], currentPlayer)
+        return move
 
 
         function checkValidPosition(neighbour) {
@@ -433,20 +475,13 @@ function AIMove(board, currentPlayer) {
     //     return [index[0], index[1]]
     // }
     else {
+        console.log(board);
+        console.log(blanks(board).length + ' Result is: ');
         result = abminimax(board, blanks(board).length, blanks(board).length - MAX_DEPTH + 1, -Infinity, Infinity, currentPlayer)
-        setmove(board, result[0], result[1], currentPlayer)
         console.log([result[0], result[1]]);
+        setmove(board, result[0], result[1], currentPlayer)
         return [result[0], result[1]]
     }
-}
-
-
-var currentPlayer;
-var board;
-
-
-function gameFinished(board) {
-    return boardFull(board) || gameWon(createLinearArray(board))
 }
 
 function playerMove(row, col) {
@@ -454,6 +489,7 @@ function playerMove(row, col) {
         setmove(board, row, col, currentPlayer)
         currentPlayer *= -1
     }
+
 
     if (gameFinished(board)) return { AImove: false, move: '', gameFinished: gameFinished(board), result: printResult(createLinearArray(board)) }
     else {

@@ -19,7 +19,7 @@ export class GridComponent implements OnInit {
 
   markCell(row: number, col: number) {
 
-    if (this.grid[row][col] === 'B') return
+    if (this.grid[row][col] === 'B' || this.grid[row][col] === 'W') return
     this.grid[row][col] = 'B';
 
     // Send row and column data to the backend

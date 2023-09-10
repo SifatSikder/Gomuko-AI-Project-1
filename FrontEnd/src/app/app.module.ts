@@ -7,13 +7,12 @@ import { GridComponent } from './grid/grid.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { } from '@angular/material'
-import { PlayerOrderComponent } from './player-order/player-order.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
     GridComponent,
-    PlayerOrderComponent
   ],
   imports: [
     BrowserModule,
