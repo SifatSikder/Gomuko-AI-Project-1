@@ -41,12 +41,37 @@ export class GridComponent implements OnInit {
       if (response.gameFinished) { //alert(response.result);
 
 
-        if (response.result == 1) Swal.fire('Congratulations!', 'You won the game!', 'success')
+        if (response.result == 1) {
+          // Swal.fire('Congratulations!', 'You won the game!', 'success')
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Congratulations! You won the game',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
 
-
-        else if (response.result == -1) Swal.fire('Sad!', 'You lose the game!', 'error')
-
-        else Swal.fire('Draw!', 'warning')
+        else if (response.result == -1) {
+          // Swal.fire('Sad!', 'You lose the game!', 'error')
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Sad! You lose the game',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+        else {
+          // Swal.fire('Draw!', 'warning')
+          Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Draw!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
 
         this.http.get<any>(`${this.BASE_URL}/flush`).subscribe(response => {
           console.log(response.board);
