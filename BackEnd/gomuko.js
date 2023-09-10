@@ -4,12 +4,14 @@ var currentPlayer;
 var board;
 
 function fourInARow(board, opponentPlayer) {
+
     var linearBoard = createLinearArray(board)
     var indexes = createIndexArray(board)
 
     var present = false;
     var index;
     for (let i = 0; i < linearBoard.length; i++) {
+        console.log(i + ' is ' + linearBoard[i]);
         for (let j = 0; j < linearBoard[i].length - 4; j++) {
             var count = 0
             for (let k = 0; k < 5; k++) {
@@ -494,7 +496,6 @@ function AIMove(board, currentPlayer) {
         return index
     }
 
-
     var { present, index } = fourInARow(board, -1 * currentPlayer)
     if (present) {
         // console.log(fourInARow(board, -1 * currentPlayer));
@@ -506,10 +507,11 @@ function AIMove(board, currentPlayer) {
     }
 
     else {
+        console.log('AI using minmax');
         result = abminimax(board, blanks(board).length, blanks(board).length - MAX_DEPTH + 1, -Infinity, Infinity, currentPlayer)
-        console.log([result[0], result[1]]);
+        // console.log([result[0], result[1]]);
         setmove(board, result[0], result[1], currentPlayer)
-        console.log(board);
+        // console.log(board);
         return [result[0], result[1]]
     }
 }
@@ -523,6 +525,7 @@ function playerMove(row, col) {
 
     if (gameFinished(board)) return { AImove: false, move: '', gameFinished: gameFinished(board), result: printResult(createLinearArray(board)) }
     else {
+        console.log(board);
         var move = AIMove(board, currentPlayer);
         currentPlayer *= -1
         return { AImove: true, move: move, gameFinished: gameFinished(board), result: printResult(createLinearArray(board)) }
