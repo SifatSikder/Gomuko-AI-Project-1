@@ -50,6 +50,8 @@ export class GridComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           })
+
+
         }
 
         else if (response.result == -1) {
@@ -82,8 +84,23 @@ export class GridComponent implements OnInit {
     });
   }
 
-  showPrompt() {
-    const choice = prompt('Enter to play 1st or 2nd');
+  async showPrompt() {
+    // const choice = prompt('Enter to play 1st or 2nd');
+
+    const options = { 1: 'BLACK', 2: 'WHITE' };
+
+    const { value: choice } = await Swal.fire({
+      title: 'Enter your choice',
+      input: 'radio',
+      inputOptions: options,
+      inputValidator: (value) => {
+        if (!value) {
+          return 'You need to choose something!';
+        }
+        return
+      }
+    })
+
     this.http.post<any>(`${this.BASE_URL}/playerOrder`, { choice }).subscribe();
   }
 
