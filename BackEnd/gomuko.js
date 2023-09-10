@@ -502,4 +502,4 @@ function playerMove(row, col) {
     }
 }
 
-module.exports = { initiate, playerMove };
+module.exports = { initiate, playerMove, initializeBoard };

@@ -30,18 +30,23 @@ export class GridComponent implements OnInit {
       if (response.AImove) {
         this.grid[response.move[0]][response.move[1]] = 'W';
       }
-      if (response.gameFinished)
-       { //alert(response.result);
+      if (response.gameFinished) { //alert(response.result);
 
-      
-          if(response.result==1) Swal.fire('Congratulations!','You won the game!','success')
-    
 
-          else if(response.result==-1)  Swal.fire('Sad!','You lose the game!','error')
-    
-          else  Swal.fire('Draw!','warning')
-    
-       }
+        if (response.result == 1) Swal.fire('Congratulations!', 'You won the game!', 'success')
+
+
+        else if (response.result == -1) Swal.fire('Sad!', 'You lose the game!', 'error')
+
+        else Swal.fire('Draw!', 'warning')
+
+        this.http.get<any>(`${this.BASE_URL}/flush`).subscribe(response => {
+          console.log(response.board);
+
+
+        });
+
+      }
     });
   }
 
@@ -61,7 +66,7 @@ export class GridComponent implements OnInit {
   //   // Wrap every letter in a span
   //   var textWrapper = document.querySelector('.Gomuko');
   //   textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
-    
+
   //   anime.timeline({loop: true})
   //     .add({
   //       targets: '.an-2 .letter',
@@ -76,6 +81,6 @@ export class GridComponent implements OnInit {
   //       easing: "easeOutExpo",
   //       delay: 1000
   //     });
-    
+
   //   }
 }

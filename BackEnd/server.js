@@ -27,6 +27,12 @@ app.post('/playerOrder', (req, res) => {
 })
 
 
+app.get('/flush', (req, res) => {
+  var board = gomuko.initializeBoard()
+  res.status(200).json({ message: 'Board Flushed', board: board });
+})
+
+
 //PORT and SERVER starting configuration
 const PORT = 8080
 app.listen(PORT, () => { console.log(`Server is running at port ${PORT}`) })
