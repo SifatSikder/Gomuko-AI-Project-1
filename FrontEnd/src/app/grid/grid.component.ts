@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { elementAt } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-grid',
@@ -29,7 +31,17 @@ export class GridComponent implements OnInit {
         this.grid[response.move[0]][response.move[1]] = 'W';
       }
       if (response.gameFinished)
-        alert(response.result);
+       { //alert(response.result);
+
+      
+          if(response.result==1) Swal.fire('Congratulations!','You won the game!','success')
+    
+
+          else if(response.result==-1)  Swal.fire('Sad!','You lose the game!','error')
+    
+          else  Swal.fire('Draw!','warning')
+    
+       }
     });
   }
 
@@ -42,4 +54,28 @@ export class GridComponent implements OnInit {
     this.showPrompt()
 
   }
+
+
+  // ngAfterViewInit(): void {
+
+  //   // Wrap every letter in a span
+  //   var textWrapper = document.querySelector('.Gomuko');
+  //   textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+    
+  //   anime.timeline({loop: true})
+  //     .add({
+  //       targets: '.an-2 .letter',
+  //       opacity: [0,1],
+  //       easing: "easeInOutQuad",
+  //       duration: 2250,
+  //       delay: (el, i) => 150 * (i+1)
+  //     }).add({
+  //       targets: '.an-2',
+  //       opacity: 0,
+  //       duration: 1000,
+  //       easing: "easeOutExpo",
+  //       delay: 1000
+  //     });
+    
+  //   }
 }

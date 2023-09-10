@@ -438,6 +438,9 @@ function abminimax(board, depth, maxDepth, alpha, beta, player) {
 
 function AIMove(board, currentPlayer) {
 
+    console.log(board);
+    console.log(currentPlayer);
+
 
     if (blanks(board).length == SIZE * SIZE) {
 

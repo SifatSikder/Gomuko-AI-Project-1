@@ -1,10 +1,18 @@
+
+<h3 class="Gomuko">Gomuko</h3>
 <div class="matrix-container">
+  
   <table>
     <tr *ngFor="let row of grid; let i = index" class="matrix-row">
       <td *ngFor="let cell of row; let j = index" class="matrix-cell" [class.marked]="cell==='x'"
         (click)="markCell(i, j)">
         <!-- {{ cell ? 'x' : '' }} -->
-        {{ cell === 'B' ? 'B' : cell === 'W' ? 'W' : '' }}
+        <!-- {{ cell === 'B' ? 'B' : cell === 'W' ? 'W' : '' }} -->
+
+        <img *ngIf="cell === 'B'" src="assets/black_piece.png" alt="B Image" />
+        <img *ngIf="cell === 'W'" src="assets/white_piece.png" alt="W Image" />
+
+
       </td>
     </tr>
   </table>
