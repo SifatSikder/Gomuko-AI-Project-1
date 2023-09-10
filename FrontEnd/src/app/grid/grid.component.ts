@@ -79,7 +79,7 @@ export class GridComponent implements OnInit {
 
         this.http.get<any>(`${this.BASE_URL}/flush`).subscribe(response => {
           console.log(response.board);
-          this.flushBoard();
+          setTimeout(this.flushBoard, 5000);
         });
 
       }

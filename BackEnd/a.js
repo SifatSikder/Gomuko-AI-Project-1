@@ -3,33 +3,7 @@ const MAX_DEPTH = 3
 var currentPlayer;
 var board;
 
-function fourInARow(board, player) {
 
-    var linearBoard = createLinearArray(board)
-    var indexes = createIndexArray(board)
-
-    var present = false;
-    var index;
-    for (let i = 0; i < linearBoard.length; i++) {
-        // console.log(i + ' is ' + linearBoard[i]);
-        for (let j = 0; j < linearBoard[i].length - 3; j++) {
-            var count = 0
-            for (let k = 0; k < 4; k++) {
-                if (linearBoard[i][j + k] === player) count++;
-                if (count == 4 && ((linearBoard[i][j + k - 4] === 0) || (linearBoard[i][j + k + 1] === 0))) {
-                    if (linearBoard[i][j + k - 4] === 0)
-                        index = indexes[i][j + k - 4]
-                    else if (linearBoard[i][j + k + 1] === 0)
-                        index = indexes[i][j + k + 1]
-                    present = true;
-                    return { present: present, index: index }
-                }
-            }
-        }
-    }
-    return { present: present, index: index }
-
-}
 
 function all5Combo(board) {
     var linearBoard = createLinearArray(board)
@@ -298,7 +272,7 @@ function gameWon(linearBoard) {
 }
 
 function setmove(board, row, col, player) {
-    if (row > -1 && row < SIZE && col > -1 && col < SIZE)
+    if (row > 0 && row < SIZE && col > 0 && col < SIZE)
         board[row][col] = player;
 }
 
@@ -518,20 +492,80 @@ function AIMove(board, currentPlayer) {
 
 function playerMove(row, col) {
     if (!(boardFull(board) || gameWon(createLinearArray(board)))) {
-        console.log(row, col, currentPlayer);
         setmove(board, row, col, currentPlayer)
         currentPlayer *= -1
-        for (i = 0; i < 10; i++)console.log(i + ' ' + board[i]);
+    }
 
 
-        if (gameFinished(board)) return { AImove: false, move: '', gameFinished: gameFinished(board), result: printResult(createLinearArray(board)) }
-        else {
-            for (i = 0; i < 10; i++)console.log(i + ' ' + board[i]);
-            var move = AIMove(board, currentPlayer);
-            currentPlayer *= -1
-            return { AImove: true, move: move, gameFinished: gameFinished(board), result: printResult(createLinearArray(board)) }
-        }
+    if (gameFinished(board)) return { AImove: false, move: '', gameFinished: gameFinished(board), result: printResult(createLinearArray(board)) }
+    else {
+        console.log(board);
+        var move = AIMove(board, currentPlayer);
+        currentPlayer *= -1
+        return { AImove: true, move: move, gameFinished: gameFinished(board), result: printResult(createLinearArray(board)) }
     }
 }
 
-module.exports = { initiate, playerMove, flushBoard };
+
+// var board = [
+//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+// ]
+
+
+var board = [
+    [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, -1, 0, -1, 0, 0, 0, 0, 0],
+    [0, 1, -1, 1, 1, 0, 0, 0, 0, 0],
+
+    [0, 0, -1, 1, 1, -1, 0, 0, 0, 0],
+    [0, 0, -1, -1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, -1, 0, 0, 0, 0, 0],
+
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
+
+
+function fourInARow(board, opponentPlayer) {
+
+    var linearBoard = createLinearArray(board)
+    var indexes = createIndexArray(board)
+
+    var present = false;
+    var index;
+    for (let i = 0; i < linearBoard.length; i++) {
+        console.log(i + ' is ' + linearBoard[i]);
+        for (let j = 0; j < linearBoard[i].length - 3; j++) {
+            var count = 0
+            for (let k = 0; k < 4; k++) {
+                if (linearBoard[i][j + k] === opponentPlayer) count++;
+                if (count == 4 && ((linearBoard[i][j + k - 4] === 0) || (linearBoard[i][j + k + 1] === 0))) {
+                    if (linearBoard[i][j + k - 4] === 0)
+                        index = indexes[i][j + k - 4]
+                    else if (linearBoard[i][j + k + 1] === 0)
+                        index = indexes[i][j + k + 1]
+                    present = true;
+                    return { present: present, index: index }
+                }
+            }
+        }
+    }
+    return { present: present, index: index }
+
+}
+
+
+
+console.log(fourInARow(board, -1))
