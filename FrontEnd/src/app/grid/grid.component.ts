@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 export class GridComponent implements OnInit {
   grid: any[][] = [];
   BASE_URL: string = 'http://localhost:8080';
+  labels: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
   constructor(private http: HttpClient) {
     for (let i = 0; i < 10; i++) {
@@ -79,7 +80,7 @@ export class GridComponent implements OnInit {
 
         this.http.get<any>(`${this.BASE_URL}/flush`).subscribe(response => {
           console.log(response.board);
-          setTimeout(this.flushBoard, 5000);
+          this.flushBoard();
         });
 
       }
@@ -109,6 +110,14 @@ export class GridComponent implements OnInit {
       }
     });
   }
+
+  restartGame() {
+    location.reload();
+    // Add logic to restart your game here
+    // For example, reset the game board or perform any necessary actions
+   // this.flushBoard(); // Reset the game board (you can modify this based on your game logic)
+  }
+  
 
   ngOnInit(): void {
     this.showPrompt()

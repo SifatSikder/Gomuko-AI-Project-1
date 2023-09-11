@@ -1,18 +1,45 @@
-<h3 class="Gomuko">Gomuko</h3>
-<div class="matrix-container">
+<div class="header">
+  <h1 class="Gomuko">GOMUKO</h1>
+</div>
 
+<div class="matrix-container">
+  <!-- <div class="labels-left">
+    <div class="label1">A</div>
+    <div class="label1">B</div>
+    <div class="label1">C</div>
+    <div class="label1">D</div>
+    <div class="label1">E</div>
+    <div class="label1">F</div>
+    <div class="label1">G</div>
+    <div class="label1">H</div>
+    <div class="label1">I</div>
+    <div class="label1">J</div>
+  </div> -->
   <table>
     <tr *ngFor="let row of grid; let i = index" class="matrix-row">
-      <td *ngFor="let cell of row; let j = index" class="matrix-cell" [class.marked]="cell==='x'"
-        (click)="markCell(i, j)">
+      <td class="label-column"> {{ labels[i] }}</td> 
+      <td *ngFor="let cell of row; let j = index" class="matrix-cell" [class.marked]="cell==='x'" (click)="markCell(i, j)">
         <!-- {{ cell ? 'x' : '' }} -->
         <!-- {{ cell === 'B' ? 'B' : cell === 'W' ? 'W' : '' }} -->
-
         <img *ngIf="cell === 'B'" src="assets/black_piece.png" alt="B Image" />
         <img *ngIf="cell === 'W'" src="assets/white_piece.png" alt="W Image" />
-
-
       </td>
     </tr>
   </table>
+  <div class="labels">
+    <div class="label">1</div>
+    <div class="label">2</div>
+    <div class="label">3</div>
+    <div class="label">4</div>
+    <div class="label">5</div>
+    <div class="label">6</div>
+    <div class="label">7</div>
+    <div class="label">8</div>
+    <div class="label">9</div>
+    <div class="label">10</div>
+  </div>
+  <div class="restart-button" (click)="restartGame()">
+    Restart
+  </div>
+  
 </div>

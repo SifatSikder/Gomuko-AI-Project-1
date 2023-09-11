@@ -10,26 +10,31 @@ html, body {
   height: 100%;
 }
 
+/* Create a header for the 'GOMUKO' text */
+.header {
+  text-align: center;
+  background-color: #b7a799; /* Sky-blue background color for the header */
+  padding: 20px;
+}
+
+/* Style the "GOMUKO" text with animations */
+.Gomuko {
+  font-weight: 900;
+  font-size: 4vw;
+  animation: bounce 1s ease infinite; /* Add a bounce animation */
+}
+
 /* Set the matrix-container to fill the entire viewport with a sky-blue background color */
 .matrix-container {
   display: flex;
+  flex-direction: column; /* To place labels below the grid */
   justify-content: center;
   align-items: center;
   background-color: #b7a799; /* Sky-blue background color */
   width: 100%;
-  height: 100vh; /* Use viewport height to fill the entire screen */
+  height: calc(100vh - 80px);
+  /* Use viewport height to fill the entire screen */
   padding: 20px; /* Add some spacing around the container */
-}
-
-/* Center the "Gomuko" text and add animation */
-.Gomuko {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-weight: 900;
-  font-size: 7vw;
-  animation: bounce 1s ease infinite; /* Add a bounce animation */
 }
 
 /* Define the bounce animation */
@@ -45,14 +50,6 @@ html, body {
   }
 }
 
-
-
-/* .Gomuko{
-  display: flex;
-  text-align: center;
-  font-weight: 900;
-    font-size: 7vw;
-} */
 .matrix-row {
   display: flex;
   margin: 5px; /* Add spacing between rows */
@@ -82,4 +79,75 @@ html, body {
 .marked {
   background-color: #66ff66; /* Light green background for marked cells */
   color: #333; /* Dark gray text color for marked cells */
+}
+
+.labels {
+  display: flex;
+  justify-content: center; /* Add spacing between labels */
+  align-items: center;
+  width: 100%; /* Ensure the labels take the full width */
+  margin-top: 10px; /* Add some margin at the top of labels */
+}
+
+.label {
+  width: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+
+
+.labels-left {
+  display: flex;
+  flex-direction: column; /* Place labels vertically */
+  align-items: left;
+  width: 100%; 
+  padding: 0 10px; /* Add some spacing around labels */
+}
+
+.label1 {
+  text-align: left;
+  font-weight: bold;
+  margin: 5px 0; /* Add margin between labels */
+}
+
+/* Style the label column */
+.label-column {
+  width: 30px; /* Adjust the width as needed */
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem; /* Adjust the font size as needed */
+}
+
+
+
+/* Style the restart button */
+.restart-button {
+  background-color: #4caf50; /* Green background color */
+  color: #fff; /* White text color */
+  padding: 10px 20px; /* Add some padding to the button */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition animations */
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold;
+  /* user-select: none; Disable text selection */
+  margin-top: 20px; /* Add margin to move the button down */
+}
+
+.restart-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Scale up slightly on hover */
+}
+
+.restart-button:active {
+  background-color: #4caf50; /* Green when clicked */
+  transform: scale(0.95); /* Scale down slightly when clicked */
+}
+
+
+.your-turn {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  animation: bounce 1s ease infinite;
 }
