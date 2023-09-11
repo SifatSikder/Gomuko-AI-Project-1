@@ -90,7 +90,7 @@ export class GridComponent implements OnInit {
   async showPrompt() {
     // const choice = prompt('Enter to play 1st or 2nd');
 
-    const options = { 1: 'BLACK', 2: 'WHITE' };
+    const options = { 1: '1st', 2: '2nd' };
 
     const { value: choice } = await Swal.fire({
       title: 'Enter your choice',
