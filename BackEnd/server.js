@@ -30,6 +30,3 @@ app.get('/flush', (req, res) => {
 //PORT and SERVER starting configuration
 const PORT = 8080
 app.listen(PORT, () => { console.log(`Server is running at port ${PORT}`) })
-
-
-
